@@ -1,0 +1,60 @@
+/*A string s is nice if, for every letter of the alphabet that s contains, it appears both in uppercase and lowercase. For example, "abABB" is nice because 'A' and 'a' appear, and 'B' and 'b' appear. However, "abA" is not because 'b' appears, but 'B' does not.
+
+Given a string s, return the longest substring of s that is nice. If there are multiple, return the substring of the earliest occurrence. If there are none, return "none".
+
+
+input:
+YazaAay
+output:
+aAa
+
+input:
+Bb
+output:
+Bb
+
+input:
+c
+output:
+none
+
+input:
+ABCdabABCabc
+output:
+abABCabc
+*/
+
+
+string niceArray(string s) //recursively finding the nice array
+{
+    unordered_set<char> uset; //creating a set to store unique character
+  
+// storing unique char 
+   for (int i = 0; i < s.size(); i++)
+    {
+        uset.insert(s[i]);
+    }
+//compare each char whether both capital and small letter are in unique substring
+    for (int i = 0; i < s.size(); i++)
+    {
+     
+    //if capital and small letter present continue   
+     if (uset.count(tolower(s[i])) == true && uset.count(toupper(s[i])) == true) 
+     {
+        continue;
+        }
+        // divide the string into two part from unvalid character
+            string str1 = niceArray(s.substr(0, i));
+            string str2 = niceArray(s.substr(i + 1));
+
+    // return the greater and first occure
+           if(str1.size()>=str2.size()){
+         return str1;
+           }
+           else{
+          
+          return str2;}
+        
+    }
+    return s;
+}
